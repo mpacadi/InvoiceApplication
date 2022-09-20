@@ -11,8 +11,9 @@ namespace InvoiceApplication.Models.Data
         public int SellCount { get; set; }
         public decimal PriceTaxFree { get; set; }
         public decimal TotalPriceTaxFree { get; set; }
-        public virtual Product Product { get; set; }
 
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
         public int InvoiceId { get; set; }
         public virtual Invoice Invoice { get; set; }       
 

@@ -15,6 +15,7 @@ namespace InvoiceApplication.Models.Data
         public string CustomerName { get; set; }
 
         public virtual ApplicationUser InvoiceCreator { get; set; }
+        public int InvoiceTaxId { get; set; }
         public virtual InvoiceTax InvoiceTax { get; set; }
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }
     }
