@@ -1,0 +1,66 @@
+﻿@model InvoiceApplication.Models.Data.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceTax.TaxName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceTax.TaxName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoicePayday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoicePayday)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalTaxFree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalTaxFree)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalTax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalTax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
