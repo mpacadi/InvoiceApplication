@@ -31,42 +31,37 @@
             @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div>
-        <input type="button" id="addproduct" name="addproduct" value="Add Product" />
-        <br />
-    </div>
-
     <div class="form-group">
-        <table>
-            <thead>
-                <tr class="form-group">
-                    <th>Product</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody id="new-Product">
-                @*@foreach (var ProductQuantity in Model.ProductQuantitys)
+        <div class="control-label col-md-2">
+            <input type="button" id="addproduct" name="addproduct" value="Add Product" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.Label("Products", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div id="new-Product">
+            @*@foreach (var ProductQuantity in Model.ProductQuantitys)
                 {
                         Html.RenderPartial("PartialViewProduct", ProductQuantity);
                 }*@
-            </tbody>
-        </table>
-    </div>
-
-        <div class="form-group">
-            @Html.Label("Taxes", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("InvoiceTaxId", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.Label("Taxes", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("InvoiceTaxId", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
