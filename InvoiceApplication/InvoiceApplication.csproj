@@ -175,9 +175,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\ProductRepository.cs" />
+    <Compile Include="DAL\InvoiceProductRepository.cs" />
+    <Compile Include="DAL\InvoiceTaxRepository.cs" />
+    <Compile Include="DAL\InvoiceRepository.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\RepositoryInterfaces\IProductRepository.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceProductRepository.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceTaxRepository.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceRepository.cs" />
     <Compile Include="Migrations\202209202100280_Initial.cs" />
     <Compile Include="Migrations\202209202100280_Initial.designer.cs">
       <DependentUpon>202209202100280_Initial.cs</DependentUpon>

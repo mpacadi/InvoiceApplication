@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using InvoiceApplication.DAL;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.ViewModel;
@@ -14,12 +15,13 @@ namespace InvoiceApplication.Controllers
 {
     public class InvoicesController : Controller
     {
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Invoices
         public ActionResult Index()
         {
-            var invoices = db.Invoices.Include(i => i.InvoiceTax);
+            var invoices = unitOfWork.InvoiceRepository.Get(includeProperties: "InvoiceTax");
             return View(invoices.ToList());
         }
 
@@ -30,7 +32,7 @@ namespace InvoiceApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -41,14 +43,14 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
-            ViewBag.TaxesIds = db.InvoiceTaxes;
+            ViewBag.TaxesIds = unitOfWork.InvoiceTaxRepository.Get();
             return View();
         }
 
         public ActionResult AddNewInvoiceProduct()
         {
             var ProductQuantity = new ProductQuantityModel();
-            ViewBag.ProductsIds = db.Products;
+            ViewBag.ProductsIds =  unitOfWork.ProductRepository.Get(); ;
             return PartialView("PartialViewProduct", ProductQuantity);
         }
 
