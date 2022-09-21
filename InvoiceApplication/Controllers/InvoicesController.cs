@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
+using InvoiceApplication.ViewModel;
 
 namespace InvoiceApplication.Controllers
 {
@@ -40,8 +41,20 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
+            var template = new AddInvoiceModel
+            {
+                ProductQuantitys = new List<ProductQuantityModel>()
+            };
+            ViewBag.ProductsId = new SelectList(db.Products, "Id", "Name");
             ViewBag.InvoiceTaxId = new SelectList(db.InvoiceTaxes, "Id", "TaxName");
-            return View();
+            return View(template);
+        }
+
+        public ActionResult AddNewInvoiceProduct()
+        {
+            var ProductQuantity = new ProductQuantityModel();
+            ViewBag.Products = db.Products;
+            return PartialView("PartialViewProduct", ProductQuantity);
         }
 
         // POST: Invoices/Create
@@ -49,17 +62,9 @@ namespace InvoiceApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,InvoiceCreated,InvoicePayday,TotalTaxFree,TotalTax,CustomerName,InvoiceTaxId")] Invoice invoice)
+        public ActionResult Create(IEnumerable<ProductQuantityModel> test, DateTime InvoicePayday)
         {
-            if (ModelState.IsValid)
-            {
-                db.Invoices.Add(invoice);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.InvoiceTaxId = new SelectList(db.InvoiceTaxes, "Id", "TaxName", invoice.InvoiceTaxId);
-            return View(invoice);
+            return View(test);
         }
 
         // GET: Invoices/Edit/5
