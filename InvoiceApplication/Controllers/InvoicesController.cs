@@ -15,8 +15,15 @@ namespace InvoiceApplication.Controllers
 {
     public class InvoicesController : Controller
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork unitOfWork;
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public InvoicesController(ApplicationDbContext context)
+        {
+            this.unitOfWork = new UnitOfWork(context);
+        }
+
+
 
         // GET: Invoices
         public ActionResult Index()
