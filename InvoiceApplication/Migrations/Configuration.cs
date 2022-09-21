@@ -23,7 +23,7 @@
                 new Product{Id = 3, Name="Eraser", Description="A eraser for pencile", Price=5.00m}
             };
 
-            products.ForEach(s => context.Products.AddOrUpdate(p => p.Id, s));
+            products.ForEach(s => context.Products.AddOrUpdate(p => p.Name, s));
             context.SaveChanges();
 
             var taxes = new List<InvoiceTax>
@@ -32,7 +32,7 @@
                 new InvoiceTax{Id=2, TaxName="BIH", Tax=20m}
             };
 
-            taxes.ForEach(s => context.InvoiceTaxes.AddOrUpdate(p => p.Id, s));
+            taxes.ForEach(s => context.InvoiceTaxes.AddOrUpdate(p => p.TaxName, s));
             context.SaveChanges();
         }
     }
