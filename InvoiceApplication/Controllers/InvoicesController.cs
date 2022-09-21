@@ -41,19 +41,14 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
-            var template = new AddInvoiceModel
-            {
-                ProductQuantitys = new List<ProductQuantityModel>()
-            };
-            ViewBag.ProductsId = new SelectList(db.Products, "Id", "Name");
-            ViewBag.InvoiceTaxId = new SelectList(db.InvoiceTaxes, "Id", "TaxName");
-            return View(template);
+            ViewBag.TaxesIds = db.InvoiceTaxes;
+            return View();
         }
 
         public ActionResult AddNewInvoiceProduct()
         {
             var ProductQuantity = new ProductQuantityModel();
-            ViewBag.Products = db.Products;
+            ViewBag.ProductsIds = db.Products;
             return PartialView("PartialViewProduct", ProductQuantity);
         }
 
@@ -62,9 +57,9 @@ namespace InvoiceApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IEnumerable<ProductQuantityModel> test, DateTime InvoicePayday)
+        public ActionResult Create(AddInvoiceModel invoice)
         {
-            return View(test);
+            return View(invoice);
         }
 
         // GET: Invoices/Edit/5

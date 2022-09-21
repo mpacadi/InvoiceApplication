@@ -1,10 +1,10 @@
 ﻿@model InvoiceApplication.ViewModel.ProductQuantityModel
 
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-@using (Html.BeginCollectionItem("test"))
+@using (Html.BeginCollectionItem("ProductQuantitys"))
 {
     <div class="row productRow">
-        @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.Products, "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-4" })
+        @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.ProductsIds, "Id", "Name"), htmlAttributes: new { @class = "form-control col-md-4" })
 
         @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control col-md-4" } })
         @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })

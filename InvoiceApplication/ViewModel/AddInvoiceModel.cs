@@ -11,13 +11,11 @@ namespace InvoiceApplication.ViewModel
     {
         [Required]
         public DateTime InvoicePayday { get; set; }
-        [Required]
-
         public IEnumerable<ProductQuantityModel> ProductQuantitys { get; set; }
 
         [Required]
         [StringLength(32)]
         public string CustomerName { get; set; }
-        public int Taxs { get; set; }  
+        public int Tax { get; set; }  
     }
 }
