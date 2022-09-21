@@ -8,6 +8,7 @@ namespace InvoiceApplication.ViewModel
 {
     public class ProductQuantityModel
     {
+        [Required]
         public int ProductId { get; set; }
 
         [Required]

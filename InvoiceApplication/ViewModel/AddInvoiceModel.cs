@@ -1,4 +1,5 @@
 ﻿using InvoiceApplication.Models.Data;
+using InvoiceApplication.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,8 @@ namespace InvoiceApplication.ViewModel
     {
         [Required]
         public DateTime InvoicePayday { get; set; }
+
+        [Required(ErrorMessage = "Choose one or more options")]
         public IEnumerable<ProductQuantityModel> ProductQuantitys { get; set; }
 
         [Required]
