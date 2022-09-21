@@ -1,5 +1,4 @@
 ﻿using InvoiceApplication.Models.Data;
-using InvoiceApplication.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
