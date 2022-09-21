@@ -13,6 +13,7 @@ using InvoiceApplication.ViewModel;
 
 namespace InvoiceApplication.Controllers
 {
+    [Authorize]
     public class InvoicesController : Controller
     {
         private readonly UnitOfWork unitOfWork;

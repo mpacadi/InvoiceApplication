@@ -9,11 +9,16 @@ namespace InvoiceApplication.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly ApplicationDbContext context = new ApplicationDbContext();
+        private readonly ApplicationDbContext context;
         private GenericRepository<Invoice> invoiceRepository;
         private GenericRepository<InvoiceProduct> invoiceProductRepository;
         private GenericRepository<InvoiceTax> invoiceTaxRepository;
         private GenericRepository<Product> productRepository;
+
+        public UnitOfWork(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public GenericRepository<Invoice> InvoiceRepository
         {
