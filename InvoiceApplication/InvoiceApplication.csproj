@@ -190,6 +190,7 @@
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\InvoiceRepository - Copy.cs" />
     <Compile Include="DAL\ProductRepository.cs" />
     <Compile Include="DAL\InvoiceProductRepository.cs" />
     <Compile Include="DAL\InvoiceTaxRepository.cs" />
@@ -199,6 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ITaxCalculator.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceProductRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceTaxRepository.cs" />
@@ -225,6 +227,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Extensions\bosnian_tax.dll" />
     <Content Include="Extensions\croatian_tax.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

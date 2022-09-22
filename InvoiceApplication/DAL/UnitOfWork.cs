@@ -9,15 +9,16 @@ namespace InvoiceApplication.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
         private GenericRepository<Invoice> invoiceRepository;
         private GenericRepository<InvoiceProduct> invoiceProductRepository;
         private GenericRepository<InvoiceTax> invoiceTaxRepository;
         private GenericRepository<Product> productRepository;
+        private GenericRepository<ApplicationUser> userRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         public GenericRepository<Invoice> InvoiceRepository
@@ -27,7 +28,7 @@ namespace InvoiceApplication.DAL
 
                 if (this.invoiceRepository == null)
                 {
-                    this.invoiceRepository = new GenericRepository<Invoice>(context);
+                    this.invoiceRepository = new GenericRepository<Invoice>(_context);
                 }
                 return invoiceRepository;
             }
@@ -40,7 +41,7 @@ namespace InvoiceApplication.DAL
 
                 if (this.invoiceProductRepository == null)
                 {
-                    this.invoiceProductRepository = new GenericRepository<InvoiceProduct>(context);
+                    this.invoiceProductRepository = new GenericRepository<InvoiceProduct>(_context);
                 }
                 return invoiceProductRepository;
             }
@@ -53,7 +54,7 @@ namespace InvoiceApplication.DAL
 
                 if (this.invoiceTaxRepository == null)
                 {
-                    this.invoiceTaxRepository = new GenericRepository<InvoiceTax>(context);
+                    this.invoiceTaxRepository = new GenericRepository<InvoiceTax>(_context);
                 }
                 return invoiceTaxRepository;
             }
@@ -66,15 +67,28 @@ namespace InvoiceApplication.DAL
 
                 if (this.productRepository == null)
                 {
-                    this.productRepository = new GenericRepository<Product>(context);
+                    this.productRepository = new GenericRepository<Product>(_context);
                 }
                 return productRepository;
             }
         }
 
+        public GenericRepository<ApplicationUser> UserRepository
+        {
+            get
+            {
+
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new GenericRepository<ApplicationUser>(_context);
+                }
+                return userRepository;
+            }
+        }
+
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         private bool disposed = false;
@@ -85,7 +99,7 @@ namespace InvoiceApplication.DAL
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
             this.disposed = true;
