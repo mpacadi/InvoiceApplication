@@ -61,6 +61,6 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy/y $(OutDir)croatian_tax.dll $(ProjectDir)..\InvoiceApplication\Extensions</PostBuildEvent>
+    <PostBuildEvent>xcopy /y $(ProjectDir)bin\Debug\croatian_tax.dll  $(ProjectDir)..\InvoiceApplication\Extensions</PostBuildEvent>
   </PropertyGroup>
 </Project>
