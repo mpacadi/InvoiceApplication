@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MefProjects", "MefProjects"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CroatianTax", "CroatianTax\CroatianTax.csproj", "{BEF33DAB-6D56-47BC-9EA3-19D8B9FA2F6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BosnianTax", "BosnianTax\BosnianTax.csproj", "{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{BEF33DAB-6D56-47BC-9EA3-19D8B9FA2F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEF33DAB-6D56-47BC-9EA3-19D8B9FA2F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEF33DAB-6D56-47BC-9EA3-19D8B9FA2F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BEF33DAB-6D56-47BC-9EA3-19D8B9FA2F6F} = {B0461D46-92D5-42E3-9F47-DD6A4D157175}
+		{E9A85221-23CB-4E81-8E64-3B1E1DAFADC6} = {B0461D46-92D5-42E3-9F47-DD6A4D157175}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2153CB92-3765-411D-9D69-4D55431CEC20}
