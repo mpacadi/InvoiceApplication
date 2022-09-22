@@ -8,9 +8,9 @@ using InvoiceApplication.Interfaces;
 
 namespace CroatianTax
 {
+    [Export("HR", typeof(ITaxCalculator))]
     public class TaxCalculator : ITaxCalculator
     {
-        [Export("HR", typeof(ITaxCalculator))]
         public decimal CalculateTax(decimal price)
         {
             return price * 1.25m;
