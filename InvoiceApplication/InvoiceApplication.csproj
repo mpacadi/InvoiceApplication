@@ -197,6 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ITaxCalculator.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceProductRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IInvoiceTaxRepository.cs" />
@@ -282,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
