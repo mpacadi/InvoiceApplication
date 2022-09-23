@@ -1,0 +1,64 @@
+﻿@model IEnumerable<InvoiceApplication.Models.Data.Invoice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceTax.TaxName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoicePayday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalTaxFree)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceTax.TaxName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoicePayday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalTaxFree)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalTax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -40,20 +40,6 @@ namespace InvoiceApplication.Controllers
             return View(invoices.ToList());
         }
 
-        // GET: Invoices/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
-            if (invoice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(invoice);
-        }
 
         // GET: Invoices/Create
         public ActionResult Create()
