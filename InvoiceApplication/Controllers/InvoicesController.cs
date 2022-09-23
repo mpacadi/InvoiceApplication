@@ -101,9 +101,15 @@ namespace InvoiceApplication.Controllers
         private ICollection<InvoiceProduct> GenerateInvoiceProducts(IEnumerable<ProductQuantityModel> productQuantities)
         {
             var invoiceProducts = new List<InvoiceProduct>();
-
-            foreach (var productQuantity in productQuantities)
+            var deduplicatedProductQuantities = productQuantities.GroupBy(x => x.ProductId).Select(x => new ProductQuantityModel()
             {
+                ProductId = x.Key,
+                Quantity = x.Sum(c => c.Quantity)
+            });
+
+            foreach (var productQuantity in deduplicatedProductQuantities)
+            {
+                
                 var product = _unitOfWork.ProductRepository.GetByID(productQuantity.ProductId);
                 invoiceProducts.Add(new InvoiceProduct()
                 {
