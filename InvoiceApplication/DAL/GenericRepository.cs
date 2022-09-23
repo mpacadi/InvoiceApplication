@@ -47,8 +47,15 @@ namespace InvoiceApplication.DAL
             }
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetByID(object id, string includeProperties = "")
         {
+            IQueryable<TEntity> query = _dbSet;
+            
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
             return _dbSet.Find(id);
         }
 

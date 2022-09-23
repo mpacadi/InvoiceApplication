@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using InvoiceApplication.DAL;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 
@@ -13,23 +14,29 @@ namespace InvoiceApplication.Controllers
 {
     public class PreviewInvoicesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly UnitOfWork _unitOfWork;
 
-        // GET: AuthorizedHome
+        public PreviewInvoicesController(UnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        // GET: PreviewInvoices
         public ActionResult Index()
         {
-            var invoices = db.Invoices.Include(i => i.InvoiceTax);
+            var invoices = _unitOfWork.InvoiceRepository.Get();
             return View(invoices.ToList());
         }
 
-        // GET: AuthorizedHome/Details/5
+        // GET: PreviewInvoices/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
+            
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -41,7 +48,7 @@ namespace InvoiceApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

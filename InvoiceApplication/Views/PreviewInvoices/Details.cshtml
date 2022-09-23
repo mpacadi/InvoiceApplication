@@ -11,15 +11,22 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.InvoiceTax.TaxName)
+            @Html.Label("Creator")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.InvoiceTax.TaxName)
+            @Html.DisplayFor(model => model.InvoiceCreator.UserName)
+        </dd>
+        <dt>
+            @Html.Label("Customer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InvoiceNumber)
+            @Html.Label("Invoice number")
         </dt>
 
         <dd>
@@ -27,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InvoiceCreated)
+            @Html.Label("Created")
         </dt>
 
         <dd>
@@ -35,38 +42,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InvoicePayday)
+            @Html.Label("Payday")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.InvoicePayday)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalTaxFree)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalTaxFree)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalTax)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalTax)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CustomerName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustomerName)
-        </dd>
-
     </dl>
+
+    @Html.Partial("PartialProductView", Model);
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

@@ -35,8 +35,7 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices
         public ActionResult Index()
         {
-            var invoices = _unitOfWork.InvoiceRepository.Get(includeProperties: "InvoiceTax");
-            var invoicetest = _unitOfWork.InvoiceRepository.Get();
+            var invoices = _unitOfWork.InvoiceRepository.Get();
             return View(invoices.ToList());
         }
 

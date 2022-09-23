@@ -28,8 +28,8 @@
 
             var taxes = new List<InvoiceTax>
             {
-                new InvoiceTax{Id=1, TaxName="HR", Tax=18m},
-                new InvoiceTax{Id=2, TaxName="BIH", Tax=20m}
+                new InvoiceTax{Id=1, TaxName="HR", Tax=25m},
+                new InvoiceTax{Id=2, TaxName="BIH", Tax=17m}
             };
 
             taxes.ForEach(s => context.InvoiceTaxes.AddOrUpdate(p => p.TaxName, s));
