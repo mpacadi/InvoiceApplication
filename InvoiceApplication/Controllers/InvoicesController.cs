@@ -113,7 +113,7 @@ namespace InvoiceApplication.Controllers
              
             }
 
-            return RedirectToAction("Index", "Invoices");
+            return RedirectToAction("Index");
         }
 
         private ICollection<InvoiceProduct> GenerateInvoiceProducts(IEnumerable<ProductQuantityModel> productQuantities)
@@ -157,7 +157,7 @@ namespace InvoiceApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -190,7 +190,7 @@ namespace InvoiceApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);
+            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -203,9 +203,9 @@ namespace InvoiceApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Invoice invoice = db.Invoices.Find(id);
-            db.Invoices.Remove(invoice);
-            db.SaveChanges();
+            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
+            _unitOfWork.InvoiceRepository.Delete(invoice);
+            _unitOfWork.Save();
             return RedirectToAction("Index");
         }
 
