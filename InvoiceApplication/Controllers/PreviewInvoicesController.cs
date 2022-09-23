@@ -12,6 +12,7 @@ using InvoiceApplication.Models.Data;
 
 namespace InvoiceApplication.Controllers
 {
+    [Authorize]
     public class PreviewInvoicesController : Controller
     {
         private readonly UnitOfWork _unitOfWork;
