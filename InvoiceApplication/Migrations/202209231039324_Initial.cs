@@ -29,6 +29,7 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        InvoiceNumber = c.Int(nullable: false),
                         InvoiceCreated = c.DateTime(nullable: false),
                         InvoicePayday = c.DateTime(nullable: false),
                         TotalTaxFree = c.Decimal(nullable: false, precision: 18, scale: 2),
