@@ -6,6 +6,7 @@ using Unity;
 using Unity.Mvc5;
 using InvoiceApplication.Controllers;
 using Unity.Injection;
+using InvoiceApplication.Modules;
 
 namespace InvoiceApplication
 {
@@ -21,6 +22,7 @@ namespace InvoiceApplication
             // e.g. container.RegisterType<ITestService, TestService>();
 
             container.RegisterType<ApplicationDbContext>();
+            container.RegisterType<ExtensionsModule>();
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,6 +15,7 @@ using InvoiceApplication.DAL;
 using InvoiceApplication.Interfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
+using InvoiceApplication.Modules;
 using InvoiceApplication.ViewModel;
 using Microsoft.AspNet.Identity;
 using Unity;
@@ -23,11 +26,13 @@ namespace InvoiceApplication.Controllers
     public class InvoicesController : Controller
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly ExtensionsModule _extensions;
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public InvoicesController(ApplicationDbContext context)
+        public InvoicesController(ApplicationDbContext context, ExtensionsModule extensionsModule)
         {
             _unitOfWork = new UnitOfWork(context);
+            _extensions = extensionsModule;
         }
 
 
@@ -82,7 +87,10 @@ namespace InvoiceApplication.Controllers
                 decimal totalTaxFree = invoiceProducts.Sum(x => x.TotalPriceTaxFree);
                 newInvoice.TotalTaxFree = totalTaxFree;
 
-                decimal totalTax = CalculateTax(totalTaxFree, invoice.Tax);
+
+                string taxName = _unitOfWork.InvoiceTaxRepository.GetByID(invoice.Tax).TaxName;
+
+                decimal totalTax = _extensions.GetExtension<ITaxCalculator>(taxName).CalculateTax(totalTaxFree);
                 newInvoice.TotalTax = totalTax;
 
                 newInvoice.CustomerName = invoice.CustomerName;
@@ -118,21 +126,6 @@ namespace InvoiceApplication.Controllers
             }
 
             return invoiceProducts;
-        }
-
-        private decimal CalculateTax(decimal price, int taxId)
-        {
-            var catalog = new AggregateCatalog();
-
-            catalog.Catalogs.Add(new DirectoryCatalog(ConfigurationManager.AppSettings["ExtensionsPath"]));
-
-            var container = new CompositionContainer(catalog);
-
-            string taxName = _unitOfWork.InvoiceTaxRepository.GetByID(taxId).TaxName;
-
-            decimal totalTax = container.GetExport<ITaxCalculator>(taxName).Value.CalculateTax(price);
-
-            return totalTax;
         }
 
         // GET: Invoices/Edit/5
