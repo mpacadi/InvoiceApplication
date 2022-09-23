@@ -8,6 +8,7 @@ namespace InvoiceApplication.Models.Data
     public class Invoice
     {
         public int Id { get; set; }
+        public int InvoiceNumber { get; set; }
         public DateTime InvoiceCreated { get; set; }
         public DateTime InvoicePayday { get; set; }
         public decimal TotalTaxFree { get; set; }
@@ -18,5 +19,10 @@ namespace InvoiceApplication.Models.Data
         public int InvoiceTaxId { get; set; }
         public virtual InvoiceTax InvoiceTax { get; set; }
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }
+
+        public Invoice()
+        {
+            InvoiceNumber = 0;
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -7,21 +10,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.DAL;
+using InvoiceApplication.Interfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.ViewModel;
+using Microsoft.AspNet.Identity;
+using Unity;
 
 namespace InvoiceApplication.Controllers
 {
     [Authorize]
     public class InvoicesController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly UnitOfWork _unitOfWork;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public InvoicesController(ApplicationDbContext context)
         {
-            this.unitOfWork = new UnitOfWork(context);
+            _unitOfWork = new UnitOfWork(context);
         }
 
 
@@ -29,7 +35,8 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices
         public ActionResult Index()
         {
-            var invoices = unitOfWork.InvoiceRepository.Get(includeProperties: "InvoiceTax");
+            var invoices = _unitOfWork.InvoiceRepository.Get(includeProperties: "InvoiceTax");
+            var invoicetest = _unitOfWork.InvoiceRepository.Get();
             return View(invoices.ToList());
         }
 
@@ -40,7 +47,7 @@ namespace InvoiceApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = unitOfWork.InvoiceRepository.GetByID(id);
+            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -51,14 +58,15 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
-            ViewBag.TaxesIds = unitOfWork.InvoiceTaxRepository.Get();
+            ViewBag.TaxesIds = _unitOfWork.InvoiceTaxRepository.Get();
             return View();
         }
 
+        // POST: Invoices/AddNewInvoiceProduct
         public ActionResult AddNewInvoiceProduct()
         {
             var ProductQuantity = new ProductQuantityModel();
-            ViewBag.ProductsIds =  unitOfWork.ProductRepository.Get(); ;
+            ViewBag.ProductsIds =  _unitOfWork.ProductRepository.Get(); ;
             return PartialView("PartialViewProduct", ProductQuantity);
         }
 
@@ -69,7 +77,77 @@ namespace InvoiceApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AddInvoiceModel invoice)
         {
-            return View(invoice);
+            if (ModelState.IsValid)
+            {
+                var newInvoice = new Invoice();
+
+                // get new invoicenumber
+                var lastInvoice = _unitOfWork.InvoiceRepository.Get().LastOrDefault();
+                if (lastInvoice != null)
+                {
+                    newInvoice.InvoiceNumber = lastInvoice.InvoiceNumber + 1;
+                }
+
+                newInvoice.InvoiceCreated = DateTime.Now;
+                newInvoice.InvoicePayday = invoice.InvoicePayday;
+
+                ICollection<InvoiceProduct> invoiceProducts = GenerateInvoiceProducts(invoice.ProductQuantitys);
+                newInvoice.InvoiceProducts = invoiceProducts;
+
+                decimal totalTaxFree = invoiceProducts.Sum(x => x.TotalPriceTaxFree);
+                newInvoice.TotalTaxFree = totalTaxFree;
+
+                decimal totalTax = CalculateTax(totalTaxFree, invoice.Tax);
+                newInvoice.TotalTax = totalTax;
+
+                newInvoice.CustomerName = invoice.CustomerName;
+
+                newInvoice.InvoiceCreator = _unitOfWork.UserRepository.GetByID(User.Identity.GetUserId());
+
+                newInvoice.InvoiceTaxId = invoice.Tax;
+
+
+                _unitOfWork.InvoiceRepository.Insert(newInvoice);
+                _unitOfWork.Save();
+
+             
+            }
+
+            return RedirectToAction("Index", "Invoices");
+        }
+
+        private ICollection<InvoiceProduct> GenerateInvoiceProducts(IEnumerable<ProductQuantityModel> productQuantities)
+        {
+            var invoiceProducts = new List<InvoiceProduct>();
+
+            foreach (var productQuantity in productQuantities)
+            {
+                var product = _unitOfWork.ProductRepository.GetByID(productQuantity.ProductId);
+                invoiceProducts.Add(new InvoiceProduct()
+                {
+                    SellCount = productQuantity.Quantity,
+                    PriceTaxFree = product.Price,
+                    TotalPriceTaxFree = product.Price * productQuantity.Quantity,
+                    ProductId = productQuantity.ProductId
+                });
+            }
+
+            return invoiceProducts;
+        }
+
+        private decimal CalculateTax(decimal price, int taxId)
+        {
+            var catalog = new AggregateCatalog();
+
+            catalog.Catalogs.Add(new DirectoryCatalog(ConfigurationManager.AppSettings["ExtensionsPath"]));
+
+            var container = new CompositionContainer(catalog);
+
+            string taxName = _unitOfWork.InvoiceTaxRepository.GetByID(taxId).TaxName;
+
+            decimal totalTax = container.GetExport<ITaxCalculator>(taxName).Value.CalculateTax(price);
+
+            return totalTax;
         }
 
         // GET: Invoices/Edit/5
