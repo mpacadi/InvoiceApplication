@@ -56,48 +56,37 @@ namespace InvoiceApplication.Controllers
         public ActionResult AddNewInvoiceProduct()
         {
             var ProductQuantity = new ProductQuantityModel();
-            ViewBag.ProductsIds =  _unitOfWork.ProductRepository.Get(); ;
+            ViewBag.Products =  _unitOfWork.ProductRepository.Get();
             return PartialView("PartialViewProduct", ProductQuantity);
         }
 
         // POST: Invoices/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AddInvoiceModel invoice)
         {
             if (ModelState.IsValid)
             {
-                var newInvoice = new Invoice();
-
-                // get new invoicenumber
-                var lastInvoice = _unitOfWork.InvoiceRepository.Get().LastOrDefault();
-                if (lastInvoice != null)
-                {
-                    newInvoice.InvoiceNumber = lastInvoice.InvoiceNumber + 1;
-                }
-
-                newInvoice.InvoiceCreated = DateTime.Now;
-                newInvoice.InvoicePayday = invoice.InvoicePayday;
+                Invoice lastInvoice = _unitOfWork.InvoiceRepository.Get().LastOrDefault();
 
                 ICollection<InvoiceProduct> invoiceProducts = GenerateInvoiceProducts(invoice.ProductQuantitys);
-                newInvoice.InvoiceProducts = invoiceProducts;
 
                 decimal totalTaxFree = invoiceProducts.Sum(x => x.TotalPriceTaxFree);
-                newInvoice.TotalTaxFree = totalTaxFree;
-
 
                 string taxName = _unitOfWork.InvoiceTaxRepository.GetByID(invoice.Tax).TaxName;
 
-                decimal totalTax = _extensions.GetExtension<ITaxCalculator>(taxName).CalculateTax(totalTaxFree);
-                newInvoice.TotalTax = totalTax;
-
-                newInvoice.CustomerName = invoice.CustomerName;
-
-                newInvoice.InvoiceCreator = _unitOfWork.UserRepository.GetByID(User.Identity.GetUserId());
-
-                newInvoice.InvoiceTaxId = invoice.Tax;
+                Invoice newInvoice = new Invoice()
+                {
+                    InvoiceNumber = lastInvoice != null ? lastInvoice.InvoiceNumber + 1 : lastInvoice.InvoiceNumber,
+                    InvoiceCreated = DateTime.Now,
+                    InvoicePayday = invoice.InvoicePayday,
+                    InvoiceProducts = invoiceProducts,
+                    TotalTaxFree = totalTaxFree,
+                    TotalTax = _extensions.GetExtension<ITaxCalculator>(taxName).CalculateTax(totalTaxFree),
+                    CustomerName = invoice.CustomerName,
+                    InvoiceCreator = _unitOfWork.UserRepository.GetByID(User.Identity.GetUserId()),
+                    InvoiceTaxId = invoice.Tax
+                };
 
 
                 _unitOfWork.InvoiceRepository.Insert(newInvoice);

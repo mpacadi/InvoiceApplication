@@ -57,6 +57,10 @@ namespace InvoiceApplication.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "PreviewInvoices");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -163,7 +167,7 @@ namespace InvoiceApplication.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "AuthorizedHome");
+                    return RedirectToAction("Index", "PreviewInvoices");
                 }
                 AddErrors(result);
             }
