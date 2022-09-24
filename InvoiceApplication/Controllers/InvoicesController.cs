@@ -21,6 +21,7 @@ using InvoiceApplication.Validators;
 using InvoiceApplication.ViewModel;
 using log4net;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Unity;
 
@@ -101,14 +102,14 @@ namespace InvoiceApplication.Controllers
             else
             {
                 var results = new AddInvoiceValidator().Validate(invoice);
-                string errorMsgs = "";
+                List<ErrorMessageModel> errorMsgs = new List<ErrorMessageModel>();
                 foreach (var failure in results.Errors)
                 {
-                    var errMsg = "Validation failed: Property: " + failure.PropertyName + ", Error: " + failure.ErrorMessage;
-                    errorMsgs += errMsg;
-                    _logger.Error(errMsg);
+                    var err = new ErrorMessageModel(failure.PropertyName, failure.ErrorMessage);
+                    errorMsgs.Add(err);
+                    _logger.Error(err.ToString());
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, errorMsgs);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(errorMsgs));
             }
 
             return RedirectToAction("Index");
