@@ -11,11 +11,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using FluentValidation.Results;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Interfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.Modules;
+using InvoiceApplication.Validators;
 using InvoiceApplication.ViewModel;
 using Microsoft.AspNet.Identity;
 using Unity;
@@ -27,7 +29,6 @@ namespace InvoiceApplication.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly ExtensionsModule _extensions;
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         public InvoicesController(ApplicationDbContext context, ExtensionsModule extensionsModule)
         {
@@ -94,6 +95,15 @@ namespace InvoiceApplication.Controllers
 
              
             }
+            else
+            {
+                var results = new AddInvoiceValidator().Validate(invoice);
+                foreach (var failure in results.Errors)
+                {
+                    Console.WriteLine("Property" + failure.PropertyName + "failed validation.");
+                    Console.WriteLine("Error was: " + failure.ErrorMessage);
+                }
+            }
 
             return RedirectToAction("Index");
         }
@@ -153,7 +163,7 @@ namespace InvoiceApplication.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
