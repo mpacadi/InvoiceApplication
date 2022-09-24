@@ -19,10 +19,5 @@ namespace InvoiceApplication.Models.Data
         public int InvoiceTaxId { get; set; }
         public virtual InvoiceTax InvoiceTax { get; set; }
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }
-
-        public Invoice()
-        {
-            InvoiceNumber = 0;
-        }
     }
 }

@@ -77,7 +77,7 @@ namespace InvoiceApplication.Controllers
 
                 Invoice newInvoice = new Invoice()
                 {
-                    InvoiceNumber = lastInvoice != null ? lastInvoice.InvoiceNumber + 1 : lastInvoice.InvoiceNumber,
+                    InvoiceNumber = lastInvoice != null ? lastInvoice.InvoiceNumber + 1 : 0,
                     InvoiceCreated = DateTime.Now,
                     InvoicePayday = invoice.InvoicePayday,
                     InvoiceProducts = invoiceProducts,
@@ -121,39 +121,6 @@ namespace InvoiceApplication.Controllers
             }
 
             return invoiceProducts;
-        }
-
-        // GET: Invoices/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
-            if (invoice == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.InvoiceTaxId = new SelectList(db.InvoiceTaxes, "Id", "TaxName", invoice.InvoiceTaxId);
-            return View(invoice);
-        }
-
-        // POST: Invoices/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,InvoiceCreated,InvoicePayday,TotalTaxFree,TotalTax,CustomerName,InvoiceTaxId")] Invoice invoice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(invoice).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.InvoiceTaxId = new SelectList(db.InvoiceTaxes, "Id", "TaxName", invoice.InvoiceTaxId);
-            return View(invoice);
         }
 
         // GET: Invoices/Delete/5
