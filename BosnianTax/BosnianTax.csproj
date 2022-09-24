@@ -51,6 +51,9 @@
       <Name>InvoiceApplication</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y $(ProjectDir)bin\Debug\bosnian_tax.dll  $(ProjectDir)..\InvoiceApplication\Extensions</PostBuildEvent>
