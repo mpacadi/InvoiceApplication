@@ -84,7 +84,7 @@ namespace InvoiceApplication.Controllers
                     TotalTaxFree = totalTaxFree,
                     TotalTax = _extensions.GetExtension<ITaxCalculator>(taxName).CalculateTax(totalTaxFree),
                     CustomerName = invoice.CustomerName,
-                    InvoiceCreator = _unitOfWork.UserRepository.GetByID(User.Identity.GetUserId()),
+                    InvoiceCreator = User.Identity.Name,
                     InvoiceTaxId = invoice.Tax
                 };
 

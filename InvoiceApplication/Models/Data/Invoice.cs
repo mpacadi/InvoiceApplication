@@ -15,7 +15,7 @@ namespace InvoiceApplication.Models.Data
         public decimal TotalTax { get; set; }
         public string CustomerName { get; set; }
 
-        public virtual ApplicationUser InvoiceCreator { get; set; }
+        public string InvoiceCreator { get; set; }
         public int InvoiceTaxId { get; set; }
         public virtual InvoiceTax InvoiceTax { get; set; }
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }

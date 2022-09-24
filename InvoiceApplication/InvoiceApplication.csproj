@@ -211,6 +211,10 @@
     <Compile Include="Migrations\202209231039324_Initial.designer.cs">
       <DependentUpon>202209231039324_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209232352249_RemoveAppUser.cs" />
+    <Compile Include="Migrations\202209232352249_RemoveAppUser.designer.cs">
+      <DependentUpon>202209232352249_RemoveAppUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Data\Invoice.cs" />
@@ -310,6 +314,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202209231039324_Initial.resx">
       <DependentUpon>202209231039324_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209232352249_RemoveAppUser.resx">
+      <DependentUpon>202209232352249_RemoveAppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
