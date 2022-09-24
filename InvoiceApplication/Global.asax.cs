@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using FluentValidation.Mvc;
 using InvoiceApplication.Validators;
+using log4net.Config;
 
 namespace InvoiceApplication
 {
@@ -19,6 +20,7 @@ namespace InvoiceApplication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            XmlConfigurator.Configure();
             ValidatorConfiguration();
         }
 

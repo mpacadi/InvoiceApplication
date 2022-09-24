@@ -19,7 +19,9 @@ using InvoiceApplication.Models.Data;
 using InvoiceApplication.Modules;
 using InvoiceApplication.Validators;
 using InvoiceApplication.ViewModel;
+using log4net;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using Unity;
 
 namespace InvoiceApplication.Controllers
@@ -27,6 +29,7 @@ namespace InvoiceApplication.Controllers
     [Authorize]
     public class InvoicesController : Controller
     {
+        private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly UnitOfWork _unitOfWork;
         private readonly ExtensionsModule _extensions;
 
@@ -98,11 +101,14 @@ namespace InvoiceApplication.Controllers
             else
             {
                 var results = new AddInvoiceValidator().Validate(invoice);
+                string errorMsgs = "";
                 foreach (var failure in results.Errors)
                 {
-                    Console.WriteLine("Property" + failure.PropertyName + "failed validation.");
-                    Console.WriteLine("Error was: " + failure.ErrorMessage);
+                    var errMsg = "Validation failed: Property: " + failure.PropertyName + ", Error: " + failure.ErrorMessage;
+                    errorMsgs += errMsg;
+                    _logger.Error(errMsg);
                 }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, errorMsgs);
             }
 
             return RedirectToAction("Index");
