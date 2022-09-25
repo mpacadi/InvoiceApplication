@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
+using InvoiceApplication.ViewModel;
 using log4net;
 
 
@@ -37,15 +38,17 @@ namespace InvoiceApplication.Controllers
         {
             if (id == null)
             {
-                _logger.Error("Invoice Id is not provided in Get Details request");
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var errMsg = "Invoice Id is not provided in Get Delete request";
+                _logger.Error(errMsg);
+                TempData["err"] = new List<ErrorResponse> { new ErrorResponse("Id Missing", errMsg) };
+                return RedirectToAction("BadRequest", "Error");
             }
             Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             
             if (invoice == null)
             {
                 _logger.Error("Invoice with id " + id + " not found");
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
             }
             return View(invoice);
         }
