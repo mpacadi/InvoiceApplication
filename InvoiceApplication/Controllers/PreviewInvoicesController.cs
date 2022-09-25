@@ -11,10 +11,11 @@ using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using log4net;
 
+
 namespace InvoiceApplication.Controllers
 {
     [Authorize]
-    public class PreviewInvoicesController : Controller
+    public class PreviewInvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly UnitOfWork _unitOfWork;

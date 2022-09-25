@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "BadRequest";
+}
+
+<h1 class="text-danger">BadRequest</h1>
+<h2 class="text-danger">An error occurred while validating data</h2>
+
+<div>
+    <p>
+        @foreach (var item in (IEnumerable<InvoiceApplication.ViewModel.ErrorResponse>)@TempData["err"])
+        {
+            <b>Code: </b> <div>@item.Key</div>
+            <b>Error: </b> <div>@item.Value</div>
+        }
+    </p>
+</div>
+
+

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
@@ -28,7 +29,7 @@ using Unity;
 namespace InvoiceApplication.Controllers
 {
     [Authorize]
-    public class InvoicesController : Controller
+    public class InvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly UnitOfWork _unitOfWork;
@@ -102,12 +103,15 @@ namespace InvoiceApplication.Controllers
             else
             {
                 var results = new AddInvoiceValidator().Validate(invoice);
+                List<ErrorResponse> response = new List<ErrorResponse>();
                 foreach (var failure in results.Errors)
                 {
                     var errorResponse = new ErrorResponse(failure.ErrorCode, failure.ErrorMessage);
+                    response.Add(errorResponse);
                     _logger.Error(errorResponse.ToString());
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(results.Errors));
+                TempData["err"] = response;
+                return RedirectToAction("BadRequest", "Error");
             }
 
             return RedirectToAction("Index");
@@ -143,14 +147,16 @@ namespace InvoiceApplication.Controllers
         {
             if (id == null)
             {
-                _logger.Error("Invoice Id is not provided in Get Delete request");
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var errMsg = "Invoice Id is not provided in Get Delete request";
+                _logger.Error(errMsg);
+                TempData["err"] = new List<ErrorResponse>{ new ErrorResponse("Id Missing", errMsg)};
+                return RedirectToAction("BadRequest", "Error");
             }
             Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
                 _logger.Error("Invoice with id " + id + " not found");
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
             }
             return View(invoice);
         }
