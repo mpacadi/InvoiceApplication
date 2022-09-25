@@ -105,7 +105,7 @@ namespace InvoiceApplication.Controllers
                 List<ErrorMessageModel> errorMsgs = new List<ErrorMessageModel>();
                 foreach (var failure in results.Errors)
                 {
-                    var err = new ErrorMessageModel(failure.PropertyName, failure.ErrorMessage);
+                    var err = new ErrorMessageModel(failure.ErrorCode, failure.ErrorMessage);
                     errorMsgs.Add(err);
                     _logger.Error(err.ToString());
                 }
@@ -145,11 +145,13 @@ namespace InvoiceApplication.Controllers
         {
             if (id == null)
             {
+                _logger.Error("Invoice Id is not provided in Get Delete request");
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
             if (invoice == null)
             {
+                _logger.Error("Invoice with id " + id + " not found");
                 return HttpNotFound();
             }
             return View(invoice);
