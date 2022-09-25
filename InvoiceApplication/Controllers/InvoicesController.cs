@@ -35,9 +35,9 @@ namespace InvoiceApplication.Controllers
         private readonly UnitOfWork _unitOfWork;
         private readonly ExtensionsModule _extensions;
 
-        public InvoicesController(ApplicationDbContext context, ExtensionsModule extensionsModule)
+        public InvoicesController(UnitOfWork unitiOfWork, ExtensionsModule extensionsModule)
         {
-            _unitOfWork = new UnitOfWork(context);
+            _unitOfWork = unitiOfWork;
             _extensions = extensionsModule;
         }
 
