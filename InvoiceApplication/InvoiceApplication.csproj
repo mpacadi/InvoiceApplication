@@ -215,6 +215,7 @@
     <Compile Include="DAL\InvoiceTaxRepository.cs" />
     <Compile Include="DAL\InvoiceRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="Errors\ErrorResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,7 +249,6 @@
     <Compile Include="Validators\FluentValidatorFactory.cs" />
     <Compile Include="Validators\ProductQuantityValidator.cs" />
     <Compile Include="ViewModel\AddInvoiceModel.cs" />
-    <Compile Include="ViewModel\ErrorMessageModel.cs" />
     <Compile Include="ViewModel\ProductQuantityModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,12 +5,12 @@ using System.Web;
 
 namespace InvoiceApplication.ViewModel
 {
-    public class ErrorMessageModel
+    public class ErrorResponse
     {
         public string Key { get; set; }
         public string Value { get; set; }
 
-        public ErrorMessageModel(string key, string value)
+        public ErrorResponse(string key, string value)
         {
             Key = key;
             Value = value;

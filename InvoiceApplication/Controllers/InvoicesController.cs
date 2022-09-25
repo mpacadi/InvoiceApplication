@@ -102,14 +102,12 @@ namespace InvoiceApplication.Controllers
             else
             {
                 var results = new AddInvoiceValidator().Validate(invoice);
-                List<ErrorMessageModel> errorMsgs = new List<ErrorMessageModel>();
                 foreach (var failure in results.Errors)
                 {
-                    var err = new ErrorMessageModel(failure.ErrorCode, failure.ErrorMessage);
-                    errorMsgs.Add(err);
-                    _logger.Error(err.ToString());
+                    var errorResponse = new ErrorResponse(failure.ErrorCode, failure.ErrorMessage);
+                    _logger.Error(errorResponse.ToString());
                 }
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(errorMsgs));
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(results.Errors));
             }
 
             return RedirectToAction("Index");
