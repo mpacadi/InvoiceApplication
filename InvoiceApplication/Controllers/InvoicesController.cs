@@ -16,6 +16,7 @@ using FluentValidation.Results;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Interfaces.Modules;
 using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Interfaces.Services;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.Modules;
@@ -33,13 +34,11 @@ namespace InvoiceApplication.Controllers
     public class InvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ExtensionsModule _extensions;
+        private readonly IInvoiceService _service;
 
-        public InvoicesController(IUnitOfWork unitOfWork, ExtensionsModule extensionsModule)
+        public InvoicesController(IInvoiceService service)
         {
-            _unitOfWork = unitOfWork;
-            _extensions = extensionsModule;
+            _service = service;
         }
 
 
@@ -47,15 +46,15 @@ namespace InvoiceApplication.Controllers
         // GET: Invoices
         public ActionResult Index()
         {
-            var invoices = _unitOfWork.InvoiceRepository.Get();
-            return View(invoices.ToList());
+            var invoices = _service.GetAllInvoices();
+            return View(invoices);
         }
 
 
         // GET: Invoices/Create
         public ActionResult Create()
         {
-            ViewBag.TaxesIds = _unitOfWork.InvoiceTaxRepository.Get();
+            ViewBag.TaxesIds = _service.GetAllTaxes();
             return View();
         }
 
@@ -63,85 +62,31 @@ namespace InvoiceApplication.Controllers
         public ActionResult AddNewInvoiceProduct()
         {
             var ProductQuantity = new ProductQuantityModel();
-            ViewBag.Products =  _unitOfWork.ProductRepository.Get();
+            ViewBag.Products =  _service.GetAllProducts();
             return PartialView("PartialViewProduct", ProductQuantity);
         }
 
         // POST: Invoices/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddInvoiceModel invoice)
+        public ActionResult Create(AddInvoiceModel addInvoiceModel)
         {
             if (ModelState.IsValid)
             {
-                Invoice lastInvoice = _unitOfWork.InvoiceRepository.Get().LastOrDefault();
+                Invoice newInvoice = _service.CreateInvoice(addInvoiceModel, User.Identity.Name);
 
-                ICollection<InvoiceProduct> invoiceProducts = GenerateInvoiceProducts(invoice.ProductQuantitys);
-
-                decimal totalTaxFree = invoiceProducts.Sum(x => x.TotalPriceTaxFree);
-
-                string taxName = _unitOfWork.InvoiceTaxRepository.GetByID(invoice.Tax).TaxName;
-
-                Invoice newInvoice = new Invoice()
-                {
-                    InvoiceNumber = lastInvoice != null ? lastInvoice.InvoiceNumber + 1 : 0,
-                    InvoiceCreated = DateTime.Now,
-                    InvoicePayday = invoice.InvoicePayday,
-                    InvoiceProducts = invoiceProducts,
-                    TotalTaxFree = totalTaxFree,
-                    TotalTax = _extensions.GetExtension<ITaxCalculator>(taxName).CalculateTax(totalTaxFree),
-                    CustomerName = invoice.CustomerName,
-                    InvoiceCreator = User.Identity.Name,
-                    InvoiceTaxId = invoice.Tax
-                };
-
-
-                _unitOfWork.InvoiceRepository.Insert(newInvoice);
-                _unitOfWork.Save();
-
-             
+                _service.AddInvoice(newInvoice);
             }
             else
             {
-                var results = new AddInvoiceValidator().Validate(invoice);
-                List<ErrorResponse> response = new List<ErrorResponse>();
-                foreach (var failure in results.Errors)
-                {
-                    var errorResponse = new ErrorResponse(failure.ErrorCode, failure.ErrorMessage);
-                    response.Add(errorResponse);
-                    _logger.Error(errorResponse.ToString());
-                }
-                TempData["err"] = response;
+                TempData["err"] = _service.GetAllValidationErrors(addInvoiceModel);
                 return RedirectToAction("BadRequest", "Error");
             }
 
             return RedirectToAction("Index");
         }
 
-        private ICollection<InvoiceProduct> GenerateInvoiceProducts(IEnumerable<ProductQuantityModel> productQuantities)
-        {
-            var invoiceProducts = new List<InvoiceProduct>();
-            var deduplicatedProductQuantities = productQuantities.GroupBy(x => x.ProductId).Select(x => new ProductQuantityModel()
-            {
-                ProductId = x.Key,
-                Quantity = x.Sum(c => c.Quantity)
-            });
-
-            foreach (var productQuantity in deduplicatedProductQuantities)
-            {
-                
-                var product = _unitOfWork.ProductRepository.GetByID(productQuantity.ProductId);
-                invoiceProducts.Add(new InvoiceProduct()
-                {
-                    SellCount = productQuantity.Quantity,
-                    PriceTaxFree = product.Price,
-                    TotalPriceTaxFree = product.Price * productQuantity.Quantity,
-                    ProductId = productQuantity.ProductId
-                });
-            }
-
-            return invoiceProducts;
-        }
+        
 
         // GET: Invoices/Delete/5
         public ActionResult Delete(int? id)
@@ -153,7 +98,7 @@ namespace InvoiceApplication.Controllers
                 TempData["err"] = new List<ErrorResponse>{ new ErrorResponse("Id Missing", errMsg)};
                 return RedirectToAction("BadRequest", "Error");
             }
-            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
+            Invoice invoice = _service.GetByIdInvoice((int) id);
             if (invoice == null)
             {
                 _logger.Error("Invoice with id " + id + " not found");
@@ -167,19 +112,8 @@ namespace InvoiceApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
-            _unitOfWork.InvoiceRepository.Delete(invoice);
-            _unitOfWork.Save();
+            _service.DeleteInvoice(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

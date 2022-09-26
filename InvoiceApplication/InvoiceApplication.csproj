@@ -225,6 +225,13 @@
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\RepositoryInterfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\Services\IInvoiceService.cs" />
+    <Compile Include="Interfaces\Services\IValidationService.cs" />
+    <Compile Include="Migrations\202209262017184_RevertChange.cs" />
+    <Compile Include="Migrations\202209262017184_RevertChange.designer.cs">
+      <DependentUpon>202209262017184_RevertChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="ViewModel\ErrorResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -330,9 +337,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="Logs\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -353,6 +358,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209232352249_RemoveAppUser.resx">
       <DependentUpon>202209232352249_RemoveAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209262017184_RevertChange.resx">
+      <DependentUpon>202209262017184_RevertChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

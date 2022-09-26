@@ -11,11 +11,11 @@ using System.Xml.Linq;
 
 namespace InvoiceApplication.Modules
 {
-    public class ExtensionsModule : IExtensionModule
+    public class ExtensionModule : IExtensionModule
     {
         public AggregateCatalog catalog { get; set; }
         public CompositionContainer container { get; set; }
-        public ExtensionsModule()
+        public ExtensionModule()
         {
             catalog = new AggregateCatalog();
 

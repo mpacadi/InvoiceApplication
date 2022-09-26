@@ -9,6 +9,9 @@ using Unity.Injection;
 using InvoiceApplication.Modules;
 using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.DAL;
+using InvoiceApplication.Services;
+using InvoiceApplication.Interfaces.Services;
+using InvoiceApplication.Interfaces.Modules;
 
 namespace InvoiceApplication
 {
@@ -18,14 +21,10 @@ namespace InvoiceApplication
         {
 			var container = new UnityContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-
-            // e.g. container.RegisterType<ITestService, TestService>();
-
             container.RegisterType<ApplicationDbContext>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
-            container.RegisterType<ExtensionsModule>();
+            container.RegisterType<IInvoiceService, InvoiceService>();
+            container.RegisterType<IExtensionModule, ExtensionModule>();
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
 

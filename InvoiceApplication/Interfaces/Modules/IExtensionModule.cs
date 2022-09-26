@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InvoiceApplication.Interfaces.Modules
 {
-    internal interface IExtensionModule
+    public interface IExtensionModule
     {
         T GetExtension<T>(string contractName);
     }
