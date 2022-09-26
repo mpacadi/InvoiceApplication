@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.DAL;
+using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.ViewModel;
@@ -19,9 +20,9 @@ namespace InvoiceApplication.Controllers
     public class PreviewInvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PreviewInvoicesController(UnitOfWork unitOfWork)
+        public PreviewInvoicesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

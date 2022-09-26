@@ -1,4 +1,5 @@
-﻿using InvoiceApplication.Models;
+﻿using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace InvoiceApplication.DAL
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         internal ApplicationDbContext _context;
         internal DbSet<TEntity> _dbSet;

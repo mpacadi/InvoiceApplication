@@ -1,4 +1,5 @@
-﻿using InvoiceApplication.Models;
+﻿using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace InvoiceApplication.DAL
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly ApplicationDbContext _context;
         private GenericRepository<Invoice> invoiceRepository;

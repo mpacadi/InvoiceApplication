@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using FluentValidation.Results;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Interfaces;
+using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.Modules;
@@ -32,12 +33,12 @@ namespace InvoiceApplication.Controllers
     public class InvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ExtensionsModule _extensions;
 
-        public InvoicesController(UnitOfWork unitiOfWork, ExtensionsModule extensionsModule)
+        public InvoicesController(IUnitOfWork unitOfWork, ExtensionsModule extensionsModule)
         {
-            _unitOfWork = unitiOfWork;
+            _unitOfWork = unitOfWork;
             _extensions = extensionsModule;
         }
 

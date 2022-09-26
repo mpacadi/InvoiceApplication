@@ -223,6 +223,8 @@
     <Compile Include="DAL\InvoiceTaxRepository.cs" />
     <Compile Include="DAL\InvoiceRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IGenericRepository.cs" />
+    <Compile Include="Interfaces\RepositoryInterfaces\IUnitOfWork.cs" />
     <Compile Include="ViewModel\ErrorResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
