@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.DAL;
@@ -20,7 +21,7 @@ namespace InvoiceApplication.Controllers
     [Authorize]
     public class PreviewInvoicesController : BaseController
     {
-        private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IInvoiceService _service;
 
         public PreviewInvoicesController(IInvoiceService service)

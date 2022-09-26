@@ -1,39 +1,17 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Configuration;
-using System.Data;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
-using FluentValidation.Results;
-using InvoiceApplication.DAL;
-using InvoiceApplication.Interfaces.Modules;
-using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.Interfaces.Services;
-using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
-using InvoiceApplication.Modules;
-using InvoiceApplication.Validators;
 using InvoiceApplication.ViewModel;
 using log4net;
-using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Unity;
 
 namespace InvoiceApplication.Controllers
 {
     [Authorize]
     public class InvoicesController : BaseController
     {
-        private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IInvoiceService _service;
 
         public InvoicesController(IInvoiceService service)

@@ -1,23 +1,20 @@
-﻿using InvoiceApplication.DAL;
-using InvoiceApplication.Interfaces.Modules;
+﻿using InvoiceApplication.Interfaces.Modules;
 using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.Interfaces.Services;
 using InvoiceApplication.Models.Data;
-using InvoiceApplication.Modules;
 using InvoiceApplication.Validators;
 using InvoiceApplication.ViewModel;
 using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Unity;
+using System.Reflection;
 
 namespace InvoiceApplication.Services
 {
     public class InvoiceService : IInvoiceService
     {
-        private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IUnitOfWork _unitOfWork;
         private readonly IExtensionModule _extensions;
 
