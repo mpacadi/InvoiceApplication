@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceApplication.Interfaces
+namespace InvoiceApplication.Interfaces.Modules
 {
     public interface ITaxCalculator
     {

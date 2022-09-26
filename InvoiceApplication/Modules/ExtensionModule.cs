@@ -1,5 +1,5 @@
 ﻿using InvoiceApplication.DAL;
-using InvoiceApplication.Interfaces;
+using InvoiceApplication.Interfaces.Modules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;

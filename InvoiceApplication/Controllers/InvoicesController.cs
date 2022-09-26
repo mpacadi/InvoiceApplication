@@ -14,7 +14,7 @@ using System.Web;
 using System.Web.Mvc;
 using FluentValidation.Results;
 using InvoiceApplication.DAL;
-using InvoiceApplication.Interfaces;
+using InvoiceApplication.Interfaces.Modules;
 using InvoiceApplication.Interfaces.RepositoryInterfaces;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;

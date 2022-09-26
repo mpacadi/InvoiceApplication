@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InvoiceApplication.Interfaces;
+using InvoiceApplication.Interfaces.Modules;
 
 namespace CroatianTax
 {
