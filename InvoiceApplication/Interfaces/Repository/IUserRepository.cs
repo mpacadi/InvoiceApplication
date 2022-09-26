@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceApplication.Interfaces.RepositoryInterfaces
+namespace InvoiceApplication.Interfaces.Repository
 {
     internal interface IUserRepository
     {

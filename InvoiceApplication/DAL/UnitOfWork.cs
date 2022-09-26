@@ -1,4 +1,4 @@
-﻿using InvoiceApplication.Interfaces.RepositoryInterfaces;
+﻿using InvoiceApplication.Interfaces.Repository;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using System;

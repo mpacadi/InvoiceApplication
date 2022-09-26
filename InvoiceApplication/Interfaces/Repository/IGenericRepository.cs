@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceApplication.Interfaces.RepositoryInterfaces
+namespace InvoiceApplication.Interfaces.Repository
 {
     internal interface IGenericRepository<TEntity> where TEntity : class
     {

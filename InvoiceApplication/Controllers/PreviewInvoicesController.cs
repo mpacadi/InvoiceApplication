@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.DAL;
-using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Interfaces.Repository;
 using InvoiceApplication.Interfaces.Services;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;

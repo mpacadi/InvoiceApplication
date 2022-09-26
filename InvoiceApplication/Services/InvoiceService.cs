@@ -1,5 +1,5 @@
 ﻿using InvoiceApplication.Interfaces.Modules;
-using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Interfaces.Repository;
 using InvoiceApplication.Interfaces.Services;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.Validators;

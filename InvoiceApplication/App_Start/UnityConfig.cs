@@ -7,7 +7,7 @@ using Unity.Mvc5;
 using InvoiceApplication.Controllers;
 using Unity.Injection;
 using InvoiceApplication.Modules;
-using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Interfaces.Repository;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Services;
 using InvoiceApplication.Interfaces.Services;

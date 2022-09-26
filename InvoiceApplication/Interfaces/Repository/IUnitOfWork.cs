@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceApplication.Interfaces.RepositoryInterfaces
+namespace InvoiceApplication.Interfaces.Repository
 {
     public interface IUnitOfWork : IDisposable
     {
