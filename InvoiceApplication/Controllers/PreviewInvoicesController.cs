@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using InvoiceApplication.DAL;
 using InvoiceApplication.Interfaces.RepositoryInterfaces;
+using InvoiceApplication.Interfaces.Services;
 using InvoiceApplication.Models;
 using InvoiceApplication.Models.Data;
 using InvoiceApplication.ViewModel;
@@ -20,18 +21,18 @@ namespace InvoiceApplication.Controllers
     public class PreviewInvoicesController : BaseController
     {
         private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IInvoiceService _service;
 
-        public PreviewInvoicesController(IUnitOfWork unitOfWork)
+        public PreviewInvoicesController(IInvoiceService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
         // GET: PreviewInvoices
         public ActionResult Index()
         {
-            var invoices = _unitOfWork.InvoiceRepository.Get();
-            return View(invoices.ToList());
+            var invoices = _service.GetAllInvoices();
+            return View(invoices);
         }
 
         // GET: PreviewInvoices/Details/5
@@ -44,7 +45,7 @@ namespace InvoiceApplication.Controllers
                 TempData["err"] = new List<ErrorResponse> { new ErrorResponse("Id Missing", errMsg) };
                 return RedirectToAction("BadRequest", "Error");
             }
-            Invoice invoice = _unitOfWork.InvoiceRepository.GetByID(id);
+            Invoice invoice = _service.GetByIdInvoice((int) id);
             
             if (invoice == null)
             {
@@ -52,15 +53,6 @@ namespace InvoiceApplication.Controllers
                 return RedirectToAction("NotFound", "Error");
             }
             return View(invoice);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
