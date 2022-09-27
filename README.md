@@ -1,9 +1,14 @@
-Assignment provided by Enterwell to create invoice MVC application.
+<h2>Introduction</h2>
+Assignment provided by Enterwell to create invoice MVC5 application. Main goal if assigment is to create simple application for creating and displaying invoices. Application was created using the Visual Studion 2022 edition.
 
-Development database used in a project is LocalDB. The connection string for configuration of a database location is located on a Web.config.
+<h3>Build</h3>
+To build solution use the Visual Studio. Application can be run in VS after the build of a solution is initiated. On build the library projects for extesions are build and their output is copied inside the main MVC project.
+To initialise database run in VS terminal the update-database to create new instance of database. For development database the LocalDB was used. Using the Migrations the inital data for Taxes and Product is injected inside the database. Conncetion string for database is defined inside the Web.config.
 
-For a first use build a solution so that the .dlls for tax extension could be copied inside of a InvoiceApplication project. After that they can be used inside the web application.
+<h3>Run</h3>
+After the build and initialisation of the database, VS can be used to run the application.
 
+<h3>Frameworks</h3>
 For this assigment the following frameworks were used:
   - Entity Framework -> For creating database using the Code First approach
   - Identity -> To enable authorization and authentication of a user
