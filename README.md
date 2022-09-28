@@ -10,10 +10,11 @@ After the build and initialisation of the database, VS can be used to run the ap
 
 <h3>Frameworks</h3>
 For this assigment the following frameworks were used:
-  - Entity Framework -> For creating database using the Code First approach
-  - Identity -> To enable authorization and authentication of a user
-  - Unity -> To allow Dependecy Injection inside MVC 5 project
-  - Log4net -> To provide logging interface to catch errors
-  - FluentValidation -> To create custom validator to validate input data on Views and in Controllers
-  - BeginCollectionItem -> Html helper for collecting and passing the list of items to the controller
-  
+<ul>
+  <li>Entity Framework -> For creating database using the Code First approach</li>
+  <li>Identity -> To enable authorization and authentication of a user</li>
+  <li>Unity -> To allow Dependecy Injection inside MVC 5 project</li>
+  <li>Log4net -> To provide logging interface to catch errors</li>
+  <li>FluentValidation -> To create custom validator to validate input data on Views and in Controllers</li>
+  <li>BeginCollectionItem -> Html helper for collecting and passing the list of items to the controller</li>
+</ul>
